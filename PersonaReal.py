@@ -1,6 +1,6 @@
 class PersonaReal:
     def __init__(self, nombre, is_king,año_nacimiento, genero):
-        self.nombre = nombre
+        self.nombre = nombre.strip()
         self.ano_nacimiento = año_nacimiento
         self.genero = genero
         self.hijos = []
@@ -9,6 +9,8 @@ class PersonaReal:
 
     def añadir_hijos(self, hijo):
         self.hijos.append(hijo)
+        # Agregamos una función auxiliar para realizar la recursión
+        self.ordenar_hijos()
 
     def ordenar_hijos(self):
         if len(self.hijos) > 0:
@@ -21,8 +23,6 @@ class PersonaReal:
 
 
     def iterar_descendencia(self):
-        # Agregamos una función auxiliar para realizar la recursión
-        self.ordenar_hijos()
         def agregar_descendencia(persona):
             if len(persona.hijos) > 0:
                 for hijo in persona.hijos:

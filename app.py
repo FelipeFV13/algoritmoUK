@@ -92,27 +92,36 @@ zara.añadir_hijos(mia)
 zara .añadir_hijos(lena)
 zara.añadir_hijos(lucas)
 
-## Preguntar al usuario que posicion quiere saber
-userOption = int(input("Ingrese la posición del trono Britanico que desea saber :"))
+if __name__ == "__main__":
+    ## Preguntar al usuario que posicion quiere saber
+    userOption = int(input("Ingrese la posición del trono Britanico que desea saber :"))
 
-#Lista externa para guardar la descendencia del antiguo rey, en este caso es isabell
-lista = isabel.iterar_descendencia()
+    #Lista externa para guardar la descendencia del antiguo rey, en este caso es isabell
+    lista = isabel.iterar_descendencia()
 
-#mostramos al usuario el resultado de su busqueda
-print(lista[userOption].nombre)
+    #mostramos al usuario el resultado de su busqueda
+    print(lista[userOption].nombre)
 
-## Eliminar a alguien perteneciente a la sucesion del trono
+    ## Eliminar a alguien perteneciente a la sucesion del trono
 
-userOption = int(input("Desea eliminar a alguien perteneciente a la cadena de sucesion: \n"
-                   "Escriba 1, si desea eliminar: "))
+    userOption = int(input("Desea eliminar a alguien perteneciente a la cadena de sucesion: \n"
+                       "Escriba 1, si desea eliminar: \n"+
+                        "Escriba 2, si desea imprimir toda la sucesion al trono del reino unido: "))
 
-if userOption == 1:
-    nombre_eliminar = input("Ingrese el nombre de la persona a eliminar: ")
+    if userOption == 1:
+        nombre_eliminar = input("Ingrese el nombre de la persona a eliminar: ")
 
-    for hijo in lista:
-        if hijo.nombre == nombre_eliminar:
-            lista.remove(hijo)
+        for hijo in lista:
+            if hijo.nombre == nombre_eliminar:
+                lista.remove(hijo)
 
-    print("Sucesion al Trono Britanico: \n")
-    for i in range(1, len(lista)):
-        print(i, lista[i].nombre)
+        print("Sucesion al Trono Britanico: \n")
+        for i in range(1, len(lista)):
+            print(i, lista[i].nombre)
+    elif userOption == 2:
+        for i in range(len(lista)):
+            if i == 0:
+                print(f"king: {lista[i].nombre}")
+            else:
+                print(f"{i}: {lista[i].nombre}")
+
