@@ -94,34 +94,68 @@ zara.añadir_hijos(lucas)
 
 if __name__ == "__main__":
     ## Preguntar al usuario que posicion quiere saber
-    userOption = int(input("Ingrese la posición del trono Britanico que desea saber :"))
+    # Lista externa para guardar la descendencia del antiguo rey, en este caso es isabell
+    posiciones_sucesion_al_trono = isabel.iterar_descendencia()
 
-    #Lista externa para guardar la descendencia del antiguo rey, en este caso es isabell
-    lista = isabel.iterar_descendencia()
+    while True:
+        userOption = int(input("Ingrese la posición del trono Britanico que desea saber :"))
 
-    #mostramos al usuario el resultado de su busqueda
-    print(lista[userOption].nombre)
+        try:
+            #mostramos al usuario el resultado de su busqueda
+            print(posiciones_sucesion_al_trono[userOption].nombre)
+            break
+        except IndexError:
+            print("Posicion Fuera de rango")
 
     ## Eliminar a alguien perteneciente a la sucesion del trono
+    entry_point = False
 
-    userOption = int(input("Desea eliminar a alguien perteneciente a la cadena de sucesion: \n"
-                       "Escriba 1, si desea eliminar: \n"+
-                        "Escriba 2, si desea imprimir toda la sucesion al trono del reino unido: "))
+    while not entry_point:
+        userOption = int(input("Desea eliminar a alguien perteneciente a la cadena de sucesion: \n"
+                           "Escriba 1, si desea eliminar: \n"+
+                            "Escriba 2, si desea imprimir toda la sucesion al trono del reino unido: "))
 
-    if userOption == 1:
-        nombre_eliminar = input("Ingrese el nombre de la persona a eliminar: ")
+        if userOption == 1:
+            eleccion_usuario = input("Ingrese el nombre de la persona a eliminar o la posición: ")
 
-        for hijo in lista:
-            if hijo.nombre == nombre_eliminar:
-                lista.remove(hijo)
+            if eleccion_usuario.isdigit():
 
-        print("Sucesion al Trono Britanico: \n")
-        for i in range(1, len(lista)):
-            print(i, lista[i].nombre)
-    elif userOption == 2:
-        for i in range(len(lista)):
-            if i == 0:
-                print(f"king: {lista[i].nombre}")
+                while True:
+                    try:
+                        posicioon_persona = posiciones_sucesion_al_trono[int(eleccion_usuario)]
+
+                        print("\nSe ha eliminado a ",posicioon_persona.nombre)
+
+                        for hijo in posiciones_sucesion_al_trono:
+                            if hijo.nombre == posicioon_persona.nombre:
+                                posiciones_sucesion_al_trono.remove(hijo)
+                        entry_point = True
+                        break
+                    except IndexError:
+                        print("Lo siento esa posicion esta fuera de rango")
+                        break
+
+
             else:
-                print(f"{i}: {lista[i].nombre}")
+                nombre = ""
+                for hijo in posiciones_sucesion_al_trono:
+                    if hijo.nombre == eleccion_usuario:
+                        nombre = hijo.nombre
+                        posiciones_sucesion_al_trono.remove(hijo)
+                print("\nSe ha eliminado a ", nombre)
+                entry_point = True
+
+            if entry_point:
+                print("Sucesion al Trono Britanico: \n")
+                for i in range(1, len(posiciones_sucesion_al_trono)):
+                    print(i, posiciones_sucesion_al_trono[i].nombre)
+        elif userOption == 2:
+            for i in range(len(posiciones_sucesion_al_trono)):
+                if i == 0:
+                    print(f"king: {posiciones_sucesion_al_trono[i].nombre}")
+                else:
+                    print(f"{i}: {posiciones_sucesion_al_trono[i].nombre}")
+            entry_point = True
+        else:
+            print(userOption, "No se encuentra en las opciones")
 
